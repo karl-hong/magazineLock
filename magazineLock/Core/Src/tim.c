@@ -21,7 +21,7 @@
 #include "tim.h"
 
 /* USER CODE BEGIN 0 */
-
+#include "common.h"
 /* USER CODE END 0 */
 
 TIM_HandleTypeDef htim14;
@@ -48,7 +48,7 @@ void MX_TIM14_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN TIM14_Init 2 */
-
+  HAL_TIM_Base_Start_IT(&htim14);
   /* USER CODE END TIM14_Init 2 */
 
 }
@@ -93,5 +93,52 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 }
 
 /* USER CODE BEGIN 1 */
+extern void app_set_lock_state(uint8_t state);
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+    if(htim->Instance == TIM14){
+			/* 100ms */
+      if(lock.cmdControl.reportStatus.sendCmdDelay > 0) lock.cmdControl.reportStatus.sendCmdDelay --;
 
+      if(lock.cmdControl.operateResult.sendCmdDelay > 0) lock.cmdControl.operateResult.sendCmdDelay --;
+
+      if(lock.cmdControl.basicSetting.sendCmdDelay > 0) lock.cmdControl.basicSetting.sendCmdDelay --;
+
+      if(lock.cmdControl.ledFlashSetting.sendCmdDelay > 0) lock.cmdControl.ledFlashSetting.sendCmdDelay --;
+
+      if(lock.cmdControl.alarmSetting.sendCmdDelay > 0) lock.cmdControl.alarmSetting.sendCmdDelay --;
+
+      if(lock.cmdControl.reportOperateStatus.sendCmdDelay > 0) lock.cmdControl.reportOperateStatus.sendCmdDelay --;
+
+      // if(lock.HoldOnDetectEnable){
+      //     lock.HoldOnLatencyCnt ++;
+      //     if(lock.HoldOnLatencyCnt >= (lock.lockDelay * DELAY_BASE)){
+      //         lock.HoldOnDetectEnable = 0;
+      //         lock.HoldOnLatencyCnt = 0;
+      //         if(lock.lockState == LOCK_STATE_UNLOCK) lock.lockTaskState = LOCK_TASK_STATE_BACKWARD;//lock device
+      //     }
+      // }
+
+      if(lock.ledTask.state == LED_TASK_STATE_FLASH){
+          lock.ledTask.flashCnt ++;
+          if(FLASH_FREQ <= lock.ledTask.flashCnt){
+              lock.ledTask.flashCnt = 0;
+              lock.ledTask.flashOn = !lock.ledTask.flashOn;
+          }
+      }else{
+        lock.ledTask.flashOn = 0;
+        lock.ledTask.flashCnt = 0;
+      }
+
+      /* unlock action only last 250ms */
+      if(lock.lockTaskLatencyCnt > 0){
+        lock.lockTaskLatencyCnt --;
+        if(lock.lockTaskLatencyCnt == 0){
+          app_set_lock_state(LOCK_STATE_LOCK);
+          lock.lockTaskState = LOCK_TASK_STATE_IDLE;
+        }
+      }
+			
+    }
+}
 /* USER CODE END 1 */

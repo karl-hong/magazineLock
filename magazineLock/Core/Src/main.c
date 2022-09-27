@@ -24,7 +24,13 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdio.h>
+#include "user_protocol.h"
+#include "common.h"
+#include "user_data.h"
+#include "AiP650.h"
+#include "led.h"
+#include "HX711.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,7 +50,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+lock_ctrl_t lock;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -90,7 +96,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
+	AIP650Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -100,6 +106,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+		AIP650Task();
+		Led_Task();
+		HX711_task();
   }
   /* USER CODE END 3 */
 }

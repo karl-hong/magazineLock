@@ -22,7 +22,8 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN 0 */
-
+#include <stdio.h>
+#include "common.h"
 /* USER CODE END 0 */
 
 /*----------------------------------------------------------------------------*/
@@ -44,33 +45,39 @@ void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0|GPIO_PIN_1, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOA, Gled_Pin|Rled_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1|GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_7
-                          |GPIO_PIN_8|GPIO_PIN_9, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, Lock_On_Pin|HX711_Sck_Pin|Dsip_Sck_Pin|Disp_STB_Pin
+                          |Disp_Dat_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : PA0 PA1 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1;
+  /*Configure GPIO pins : PAPin PAPin */
+  GPIO_InitStruct.Pin = Gled_Pin|Rled_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PB0 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0;
+  /*Configure GPIO pin : PtPin */
+  GPIO_InitStruct.Pin = Lock_Dect_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(Lock_Dect_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PB1 PB3 PB4 PB7
-                           PB8 PB9 */
-  GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_7
-                          |GPIO_PIN_8|GPIO_PIN_9;
+  /*Configure GPIO pins : PBPin PBPin PBPin PBPin
+                           PBPin */
+  GPIO_InitStruct.Pin = Lock_On_Pin|HX711_Sck_Pin|Dsip_Sck_Pin|Disp_STB_Pin
+                          |Disp_Dat_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PtPin */
+  GPIO_InitStruct.Pin = HX711_Dat_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(HX711_Dat_GPIO_Port, &GPIO_InitStruct);
 
   /**/
   HAL_I2CEx_EnableFastModePlus(SYSCFG_CFGR1_I2C_FMP_PB7);
@@ -88,5 +95,12 @@ void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 2 */
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if(Lock_Dect_Pin == GPIO_Pin){
+		lock.lockDetectState = HAL_GPIO_ReadPin(Lock_Dect_GPIO_Port, Lock_Dect_Pin);
+	}
+}
+
 
 /* USER CODE END 2 */

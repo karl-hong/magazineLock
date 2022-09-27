@@ -21,7 +21,10 @@
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
+#include <stdio.h>
+#include "user_protocol.h"
 
+static uint8_t recData;
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart1;
@@ -55,7 +58,8 @@ void MX_USART1_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART1_Init 2 */
-
+	user_protocol_init();
+	HAL_UART_Receive_IT(&huart1, &recData, 1);
   /* USER CODE END USART1_Init 2 */
 
 }
@@ -195,5 +199,29 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 }
 
 /* USER CODE BEGIN 1 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+		if(huart->Instance == USART1){
+				user_protocol_push_data(&recData, 1);
+				HAL_UART_Receive_IT(&huart1, &recData, 1);
+		}
+}
 
+void user_uart1_send_data(uint8_t *data, uint16_t size)
+{
+	HAL_UART_Transmit(&huart1,(uint8_t *)data, size,0xffff);
+}
+
+int fputc(int ch, FILE *f)
+{
+    HAL_UART_Transmit(&huart2,(uint8_t *)&ch,1,0xffff);
+    return ch;
+}
+
+int fgetc(FILE *f)
+{
+  uint8_t ch=0;
+  HAL_UART_Receive(&huart2,&ch,1,0xffff);
+  return ch;
+}
 /* USER CODE END 1 */
