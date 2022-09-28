@@ -113,8 +113,8 @@ void onCmdModifyDeviceSetting(uint8_t *data, uint16_t length, uint8_t ack)
     uint32_t uid1;
     uint32_t uid2;
     uint16_t pos = 0;
-    uint32_t lockDelay;
-    uint16_t lockReplyDelay;
+    // uint32_t lockDelay;
+    // uint16_t lockReplyDelay;
     uint8_t  isReport;
     uint8_t  addr;
     uint16_t cmdLength;
@@ -124,7 +124,7 @@ void onCmdModifyDeviceSetting(uint8_t *data, uint16_t length, uint8_t ack)
         return;
     }
 
-    if(ack) cmdLength = 18;
+    if(ack) cmdLength = 13;//18;
     else    cmdLength = 6;
 
     if(cmdLength > length){
@@ -134,12 +134,12 @@ void onCmdModifyDeviceSetting(uint8_t *data, uint16_t length, uint8_t ack)
 
     if(ack) addr = data[pos++];
 
-    lockDelay = data[pos++] << 16;
-    lockDelay += data[pos++] << 8;
-    lockDelay += data[pos++];
+    // lockDelay = data[pos++] << 16;
+    // lockDelay += data[pos++] << 8;
+    // lockDelay += data[pos++];
     
-    lockReplyDelay = data[pos++] << 8;
-    lockReplyDelay += data[pos++];
+    // lockReplyDelay = data[pos++] << 8;
+    // lockReplyDelay += data[pos++];
     
     isReport = data[pos++];
 
@@ -171,8 +171,8 @@ void onCmdModifyDeviceSetting(uint8_t *data, uint16_t length, uint8_t ack)
 out:
     /* set dev state here */
     if(ack) lock.address = addr;
-    lock.lockDelay = lockDelay;
-    lock.lockReplyDelay = lockReplyDelay;
+    // lock.lockDelay = lockDelay;
+    // lock.lockReplyDelay = lockReplyDelay;
     lock.isReport = isReport;
     user_database_save();
     /* send ack msg here */
@@ -180,7 +180,6 @@ out:
         lock.cmdControl.basicSetting.sendCmdEnable = CMD_ENABLE;
         lock.cmdControl.basicSetting.sendCmdDelay = 0;
     }
-  
 }
 
 void onCmdSetLedFlash(uint8_t *data, uint16_t length, uint8_t ack)
@@ -290,6 +289,52 @@ out:
     }
 
     user_database_save();
+}
+
+void onCmdGetWeight(uint8_t *data, uint16_t length)
+{
+    uint32_t uid0;
+    uint32_t uid1;
+    uint32_t uid2;
+    uint16_t pos = 0;
+
+    if(length < 12){
+        printf("[%s]length error!\r\n", __FUNCTION__);
+        return;
+    }
+
+    uid0 = (data[pos++] << 24);
+    uid0 += (data[pos++] << 16);
+    uid0 += (data[pos++] << 8);
+    uid0 += data[pos++];
+
+    uid1 = (data[pos++] << 24);
+    uid1 += (data[pos++] << 16);
+    uid1 += (data[pos++] << 8);
+    uid1 += data[pos++];
+
+    uid2 = (data[pos++] << 24);
+    uid2 += (data[pos++] << 16);
+    uid2 += (data[pos++] << 8);
+    uid2 += data[pos++];
+
+    if(lock.uid0 != uid0 || lock.uid1 != uid1 || lock.uid2 != uid2){
+        printf("[%s]UID is not matched!\r\n", __FUNCTION__);
+        return;
+    }
+
+    /* send weight msg here */
+    
+}
+
+void onCmdSetDispContent(uint8_t *data, uint16_t length)
+{
+
+}
+
+void onCmdClrDispContent(uint8_t *data, uint16_t length, uint8_t ack)
+{
+
 }
 
 void onReportDeviceStatus(void)

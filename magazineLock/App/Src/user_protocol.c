@@ -231,6 +231,22 @@ void user_event_process(uint8_t cmd, uint8_t opt, uint8_t *data, uint16_t lenOfD
 					onCmdClrDevAlarmSetting(data, lenOfData, 1);
 					break;
 				}
+
+				case OPTION_GET_SINGLE_LOCK_WEIGHT:{
+
+				}
+	
+				case OPTION_SET_SINGLE_LOCK_DISP_CONTENT:{
+
+				}
+
+				case OPTION_CLR_SIGNLE_LOCK_DISP_CONTENT:{
+
+				}
+
+				case OPTION_CLR_ALL_LOCKS_DISP_CONTENT:{
+					
+				}
 				
 				default:
 					break;
