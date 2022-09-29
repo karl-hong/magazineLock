@@ -31,6 +31,7 @@
 #include "AiP650.h"
 #include "led.h"
 #include "HX711.h"
+#include "lock.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -97,6 +98,8 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 	AIP650Init();
+  user_database_init();
+  lock_state_detect();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -109,7 +112,9 @@ int main(void)
 		AIP650Task();
 		Led_Task();
 		HX711_task();
+    Lock_Task();
     user_protocol_handle();
+    user_reply_handle();
   }
   /* USER CODE END 3 */
 }

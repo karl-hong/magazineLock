@@ -233,19 +233,23 @@ void user_event_process(uint8_t cmd, uint8_t opt, uint8_t *data, uint16_t lenOfD
 				}
 
 				case OPTION_GET_SINGLE_LOCK_WEIGHT:{
-
+					onCmdGetWeight(data, lenOfData);
+					break;
 				}
 	
 				case OPTION_SET_SINGLE_LOCK_DISP_CONTENT:{
-
+					onCmdSetDispContent(data, lenOfData);
+					break;
 				}
 
 				case OPTION_CLR_SIGNLE_LOCK_DISP_CONTENT:{
-
+					onCmdClrDispContent(data, lenOfData, 1);
+					break;
 				}
 
 				case OPTION_CLR_ALL_LOCKS_DISP_CONTENT:{
-					
+					onCmdClrDispContent(data, lenOfData, 0);
+					break;
 				}
 				
 				default:

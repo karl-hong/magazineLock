@@ -95,10 +95,16 @@ void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 2 */
+void lock_state_detect(void)
+{
+  lock.lockDetectState = HAL_GPIO_ReadPin(Lock_Dect_GPIO_Port, Lock_Dect_Pin);
+  if(lock.lockDetectState)  lock.lockState = LOCK_STATE_LOCK;
+  else                      lock.lockState = LOCK_STATE_UNLOCK;
+}
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if(Lock_Dect_Pin == GPIO_Pin){
-		lock.lockDetectState = HAL_GPIO_ReadPin(Lock_Dect_GPIO_Port, Lock_Dect_Pin);
+		lock_state_detect();
 	}
 }
 

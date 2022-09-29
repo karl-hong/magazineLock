@@ -30,6 +30,9 @@ typedef struct {
     cmd_setting_t ledFlashSetting;
     cmd_setting_t alarmSetting;
     cmd_setting_t reportOperateStatus;
+    cmd_setting_t reportWeight;
+    cmd_setting_t reportMagazineNum;
+    cmd_setting_t clrDisp;
 }cmd_control_t;
 
 typedef struct {

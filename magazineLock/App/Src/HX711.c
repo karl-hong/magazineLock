@@ -7,6 +7,7 @@
 #include "common.h"
 
 static uint8_t s_hx711_state = 0;
+static uint16_t s_hx711_busy_cnt = 0;
 
 void HX711_task(void)
 {
@@ -14,8 +15,12 @@ void HX711_task(void)
         case 1:{
             /* check convert complete */
             if(HAL_GPIO_ReadPin(HX711_Dat_GPIO_Port, HX711_Dat_Pin)){
-                printf("HX711 is busy!\r\n");
-                break;
+                //printf("HX711 is busy!\r\n");
+								s_hx711_busy_cnt ++;
+								if(s_hx711_busy_cnt > 1000){
+									s_hx711_state = 0;
+								}
+                return;
             }
             /* HX711 data is ready, goto next state */
             s_hx711_state = 2;
@@ -39,7 +44,7 @@ void HX711_task(void)
             data = data^0x800000;
             HAL_GPIO_WritePin(HX711_Sck_GPIO_Port, HX711_Sck_Pin, GPIO_PIN_RESET);
             /* get hx711 data here */
-						lock.magazineWeight = data;
+			lock.magazineWeight = data;
             /* goto next state */
             s_hx711_state = 0;
             break;
@@ -48,7 +53,8 @@ void HX711_task(void)
         case 0:
         default:{
             HAL_GPIO_WritePin(HX711_Sck_GPIO_Port, HX711_Sck_Pin, GPIO_PIN_RESET);
-            s_hx711_state = 0;
+            s_hx711_state = 1;
+						s_hx711_busy_cnt = 0;
             break;
         }
      }

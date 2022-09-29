@@ -327,6 +327,12 @@ void AIP650Init(void) {
 	dispN1 = magazineNum / 100 % 10;
 	dispN2 = magazineNum / 10 % 10;
 	dispN3 = magazineNum % 10;
+	
+	if(dispN0 >= 16) dispN0 = 15;
+	if(dispN1 >= 16) dispN1 = 15;
+	if(dispN2 >= 16) dispN2 = 15;
+	if(dispN3 >= 16) dispN3 = 15;
+	
 	sendFullCmd(0x48, 0x51);
 	sendFullCmd(0x68, DispNum[dispN0]);
 	sendFullCmd(0x6A, DispNum[dispN1]);
@@ -348,6 +354,12 @@ void AIP650Task(void)
 		dispN1 = u32MagazineNum / 100 % 10;
 		dispN2 = u32MagazineNum / 10 % 10;
 		dispN3 = u32MagazineNum % 10;
+		
+		if(dispN0 >= 16) dispN0 = 15;
+		if(dispN1 >= 16) dispN1 = 15;
+		if(dispN2 >= 16) dispN2 = 15;
+		if(dispN3 >= 16) dispN3 = 15;
+		
 		sendFullCmd(0x48, 0x51);
 		sendFullCmd(0x68, DispNum[dispN0]);
 		sendFullCmd(0x6A, DispNum[dispN1]);

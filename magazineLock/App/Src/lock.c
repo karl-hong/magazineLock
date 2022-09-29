@@ -7,9 +7,9 @@
 void app_set_lock_state(uint8_t state)
 {
     if(state == LOCK_STATE_UNLOCK){
-        HAL_GPIO_WritePin(Rled_GPIO_Port, Rled_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(Lock_On_GPIO_Port, Lock_On_Pin, GPIO_PIN_SET);
     }else{
-        HAL_GPIO_WritePin(Rled_GPIO_Port, Rled_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(Lock_On_GPIO_Port, Lock_On_Pin, GPIO_PIN_RESET);
     }
 }
 
@@ -21,7 +21,7 @@ void Lock_Task(void)
 			if(oldState != LOCK_TASK_STATE_UNLOCK){
 				oldState = LOCK_TASK_STATE_UNLOCK;
                 app_set_lock_state(LOCK_STATE_UNLOCK);
-                lock.lockTaskLatencyCnt = 300;
+                lock.lockTaskLatencyCnt = 4;
 			}
 			break;
 		}

@@ -91,14 +91,14 @@ void onCmdSetDeviceStatus(uint8_t *data, uint16_t length, uint8_t ack)
     }
 out:
     
-    if(lock.lockState != lockSetState){
+   // if(lock.lockState != lockSetState){
         /* set dev state here */
-//        if(lockSetState)    lock.lockTaskState = LOCK_TASK_STATE_BACKWARD;//lock
-//        else                lock.lockTaskState = LOCK_TASK_STATE_FORWARD;//unlock
+       if(lockSetState)    lock.lockTaskState = LOCK_TASK_STATE_IDLE;//lock
+       else                lock.lockTaskState = LOCK_TASK_STATE_UNLOCK;//unlock
 
         /* set led state here */
         lock.ledTask.state = LED_TASK_STATE_FLASH;
-    }
+   // }
     
     /* send ack msg here */
     if(ack){
@@ -324,17 +324,99 @@ void onCmdGetWeight(uint8_t *data, uint16_t length)
     }
 
     /* send weight msg here */
-    
+    lock.cmdControl.reportWeight.sendCmdEnable = CMD_ENABLE;
+    lock.cmdControl.reportWeight.sendCmdDelay = 0;
 }
 
 void onCmdSetDispContent(uint8_t *data, uint16_t length)
 {
+    uint32_t uid0;
+    uint32_t uid1;
+    uint32_t uid2;
+    uint16_t pos = 0;
+    uint16_t magazinNum = 0;
 
+    if(length < 14){
+        printf("[%s]length error!\r\n", __FUNCTION__);
+        return;
+    }
+
+    magazinNum = (data[pos++] << 8);
+    magazinNum += data[pos++];
+
+    uid0 = (data[pos++] << 24);
+    uid0 += (data[pos++] << 16);
+    uid0 += (data[pos++] << 8);
+    uid0 += data[pos++];
+
+    uid1 = (data[pos++] << 24);
+    uid1 += (data[pos++] << 16);
+    uid1 += (data[pos++] << 8);
+    uid1 += data[pos++];
+
+    uid2 = (data[pos++] << 24);
+    uid2 += (data[pos++] << 16);
+    uid2 += (data[pos++] << 8);
+    uid2 += data[pos++];
+
+    if(lock.uid0 != uid0 || lock.uid1 != uid1 || lock.uid2 != uid2){
+        printf("[%s]UID is not matched!\r\n", __FUNCTION__);
+        return;
+    }
+
+    lock.magazineNum = magazinNum;
+
+    /* send msg here */
+		lock.cmdControl.reportMagazineNum.sendCmdEnable = CMD_ENABLE;
+		lock.cmdControl.reportMagazineNum.sendCmdDelay = 0;
 }
 
 void onCmdClrDispContent(uint8_t *data, uint16_t length, uint8_t ack)
 {
+    uint32_t uid0;
+    uint32_t uid1;
+    uint32_t uid2;
+    uint16_t pos = 0;
+    uint16_t cmdLength; 
 
+    if(!ack){
+        goto out;
+    } 
+
+    cmdLength = 12;
+    if(cmdLength > length){
+       printf("[%s]length error!\r\n", __FUNCTION__);
+        return;
+    }
+
+    uid0 = (data[pos++] << 24);
+    uid0 += (data[pos++] << 16);
+    uid0 += (data[pos++] << 8);
+    uid0 += data[pos++];
+
+    uid1 = (data[pos++] << 24);
+    uid1 += (data[pos++] << 16);
+    uid1 += (data[pos++] << 8);
+    uid1 += data[pos++];
+
+    uid2 = (data[pos++] << 24);
+    uid2 += (data[pos++] << 16);
+    uid2 += (data[pos++] << 8);
+    uid2 += data[pos++];
+
+    if(lock.uid0 != uid0 || lock.uid1 != uid1 || lock.uid2 != uid2){
+        printf("[%s]UID is not matched!\r\n", __FUNCTION__);
+        return;
+    }
+out:
+    lock.magazineNum = 0;
+    /* send ack msg here */
+    if(ack){
+        lock.cmdControl.clrDisp.sendCmdEnable = CMD_ENABLE;
+        lock.cmdControl.clrDisp.sendCmdDelay = 0;
+    }
+
+    // user_database_save();
 }
 
 void onReportDeviceStatus(void)
@@ -344,11 +426,11 @@ void onReportDeviceStatus(void)
     buffer[pos++] = lock.address;
     buffer[pos++] = lock.lockState;
    // buffer[pos++] = lock.gunState;
-    buffer[pos++] = (lock.lockDelay >> 16) & 0xff;
-    buffer[pos++] = (lock.lockDelay >> 8) & 0xff;
-    buffer[pos++] = lock.lockDelay & 0xff;
-    buffer[pos++] = (lock.lockReplyDelay >> 8) & 0xff;
-    buffer[pos++] = lock.lockReplyDelay & 0xff;
+    // buffer[pos++] = (lock.lockDelay >> 16) & 0xff;
+    // buffer[pos++] = (lock.lockDelay >> 8) & 0xff;
+    // buffer[pos++] = lock.lockDelay & 0xff;
+    // buffer[pos++] = (lock.lockReplyDelay >> 8) & 0xff;
+    // buffer[pos++] = lock.lockReplyDelay & 0xff;
     buffer[pos++] = lock.ledFlashStatus;
     buffer[pos++] = lock.alarmStatus;
     buffer[pos++] = lock.isReport;
@@ -365,7 +447,7 @@ void onReportDeviceStatus(void)
     buffer[pos++] = (lock.uid2 >> 8) & 0xff;
     buffer[pos++] = lock.uid2 & 0xff;
     
-    user_protocol_send_data(CMD_ACK, OPTION_QUERY_SINGLE_LOCK_STATUS, buffer, sizeof(buffer));       
+    user_protocol_send_data(CMD_ACK, OPTION_QUERY_SINGLE_LOCK_STATUS, buffer, pos);       
 }
 
 void onReportDeviceOptResult(void)
@@ -395,10 +477,10 @@ void onReportSetDeviceResult(void)
     uint8_t buffer[23];
     uint8_t pos = 0;
     buffer[pos++] = lock.address;
-    buffer[pos++] = (lock.lockDelay >> 8) & 0xff;
-    buffer[pos++] = (lock.lockDelay >> 16) & 0xff;
-    buffer[pos++] = lock.lockReplyDelay & 0xff;
-    buffer[pos++] = (lock.lockReplyDelay >> 8) & 0xff;
+    // buffer[pos++] = (lock.lockDelay >> 8) & 0xff;
+    // buffer[pos++] = (lock.lockDelay >> 16) & 0xff;
+    // buffer[pos++] = lock.lockReplyDelay & 0xff;
+    // buffer[pos++] = (lock.lockReplyDelay >> 8) & 0xff;
     buffer[pos++] = lock.isReport;
     buffer[pos++] = (lock.uid0 >> 24)& 0xff;
     buffer[pos++] = (lock.uid0 >> 16) & 0xff;
@@ -480,6 +562,76 @@ void onReportDevAlarm(uint8_t alarmType)
     buffer[pos++] = lock.uid2 & 0xff;
 
     user_protocol_send_data(CMD_QUERY, OPTION_MANUAL_ALARM, buffer, pos);     
+}
+
+void onReportWeight(void)
+{
+    uint8_t buffer[23];
+    uint8_t pos = 0;
+    buffer[pos++] = lock.address;
+    buffer[pos++] = (lock.magazineWeight >> 16) & 0xff;
+    buffer[pos++] = (lock.magazineWeight >> 8) & 0xff;
+    buffer[pos++] = lock.magazineWeight & 0xff;
+    buffer[pos++] = (lock.uid0 >> 24)& 0xff;
+    buffer[pos++] = (lock.uid0 >> 16) & 0xff;
+    buffer[pos++] = (lock.uid0 >> 8) & 0xff;
+    buffer[pos++] = lock.uid0 & 0xff;
+    buffer[pos++] = (lock.uid1 >> 24)& 0xff;
+    buffer[pos++] = (lock.uid1 >> 16) & 0xff;
+    buffer[pos++] = (lock.uid1 >> 8) & 0xff;
+    buffer[pos++] = lock.uid1 & 0xff;
+    buffer[pos++] = (lock.uid2 >> 24)& 0xff;
+    buffer[pos++] = (lock.uid2 >> 16) & 0xff;
+    buffer[pos++] = (lock.uid2 >> 8) & 0xff;
+    buffer[pos++] = lock.uid2 & 0xff;
+
+    user_protocol_send_data(CMD_ACK, OPTION_GET_SINGLE_LOCK_WEIGHT, buffer, pos);     
+}
+
+void onReportMagazineNum(void)
+{
+    uint8_t buffer[23];
+    uint8_t pos = 0;
+    buffer[pos++] = lock.address;
+    buffer[pos++] = (lock.magazineNum >> 8) & 0xff;
+    buffer[pos++] = lock.magazineNum & 0xff;
+    buffer[pos++] = (lock.uid0 >> 24)& 0xff;
+    buffer[pos++] = (lock.uid0 >> 16) & 0xff;
+    buffer[pos++] = (lock.uid0 >> 8) & 0xff;
+    buffer[pos++] = lock.uid0 & 0xff;
+    buffer[pos++] = (lock.uid1 >> 24)& 0xff;
+    buffer[pos++] = (lock.uid1 >> 16) & 0xff;
+    buffer[pos++] = (lock.uid1 >> 8) & 0xff;
+    buffer[pos++] = lock.uid1 & 0xff;
+    buffer[pos++] = (lock.uid2 >> 24)& 0xff;
+    buffer[pos++] = (lock.uid2 >> 16) & 0xff;
+    buffer[pos++] = (lock.uid2 >> 8) & 0xff;
+    buffer[pos++] = lock.uid2 & 0xff;
+
+    user_protocol_send_data(CMD_ACK, OPTION_SET_SINGLE_LOCK_DISP_CONTENT, buffer, pos);      
+}
+
+void onReportClrDisp(void)
+{
+    uint8_t buffer[23];
+    uint8_t pos = 0;
+    buffer[pos++] = lock.address;
+    buffer[pos++] = (lock.magazineNum >> 8) & 0xff;
+    buffer[pos++] = lock.magazineNum & 0xff;
+    buffer[pos++] = (lock.uid0 >> 24)& 0xff;
+    buffer[pos++] = (lock.uid0 >> 16) & 0xff;
+    buffer[pos++] = (lock.uid0 >> 8) & 0xff;
+    buffer[pos++] = lock.uid0 & 0xff;
+    buffer[pos++] = (lock.uid1 >> 24)& 0xff;
+    buffer[pos++] = (lock.uid1 >> 16) & 0xff;
+    buffer[pos++] = (lock.uid1 >> 8) & 0xff;
+    buffer[pos++] = lock.uid1 & 0xff;
+    buffer[pos++] = (lock.uid2 >> 24)& 0xff;
+    buffer[pos++] = (lock.uid2 >> 16) & 0xff;
+    buffer[pos++] = (lock.uid2 >> 8) & 0xff;
+    buffer[pos++] = lock.uid2 & 0xff;
+
+    user_protocol_send_data(CMD_ACK, OPTION_CLR_SIGNLE_LOCK_DISP_CONTENT, buffer, pos);    
 }
 
 uint16_t user_read_flash(uint32_t address)
@@ -601,6 +753,21 @@ void user_reply_handle(void)
     if(lock.cmdControl.reportOperateStatus.sendCmdEnable && !lock.cmdControl.reportOperateStatus.sendCmdDelay){
         lock.cmdControl.reportOperateStatus.sendCmdEnable = CMD_DISABLE;
         onReportDevAlarm(lock.lockState);
+    }
+		
+    if(lock.cmdControl.reportWeight.sendCmdEnable && !lock.cmdControl.reportWeight.sendCmdDelay){
+        lock.cmdControl.reportWeight.sendCmdEnable = CMD_DISABLE;
+        onReportWeight();   
+    }
+    
+    if(lock.cmdControl.reportMagazineNum.sendCmdEnable && !lock.cmdControl.reportMagazineNum.sendCmdDelay){
+        lock.cmdControl.reportMagazineNum.sendCmdEnable = CMD_DISABLE;
+        onReportMagazineNum();  
+    }
+    
+    if(lock.cmdControl.clrDisp.sendCmdEnable && !lock.cmdControl.clrDisp.sendCmdDelay){
+        lock.cmdControl.clrDisp.sendCmdEnable = CMD_DISABLE;
+        onReportClrDisp();
     }
 }
 
