@@ -109,6 +109,7 @@ int main(void)
 		AIP650Task();
 		Led_Task();
 		HX711_task();
+    user_protocol_handle();
   }
   /* USER CODE END 3 */
 }
