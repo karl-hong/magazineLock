@@ -52,6 +52,7 @@
 
 /* USER CODE BEGIN PV */
 lock_ctrl_t lock;
+uint16_t logInterval = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -115,6 +116,12 @@ int main(void)
     Lock_Task();
     user_protocol_handle();
     user_reply_handle();
+		if(logInterval == 0){
+			logInterval = 30;
+			static uint32_t weight = 0;
+			if(weight == 0 && !lock.magazineWeight)	weight = lock.magazineWeight;
+			printf("hx711 data: %d,  %dmg\r\n", lock.magazineWeight, (lock.magazineWeight - weight)  * 1000 * 1000 * 35 / 4292588);
+		}
   }
   /* USER CODE END 3 */
 }

@@ -93,6 +93,7 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 }
 
 /* USER CODE BEGIN 1 */
+extern uint16_t logInterval;
 extern void app_set_lock_state(uint8_t state);
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
@@ -110,14 +111,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
       if(lock.cmdControl.reportOperateStatus.sendCmdDelay > 0) lock.cmdControl.reportOperateStatus.sendCmdDelay --;
 
-      // if(lock.HoldOnDetectEnable){
-      //     lock.HoldOnLatencyCnt ++;
-      //     if(lock.HoldOnLatencyCnt >= (lock.lockDelay * DELAY_BASE)){
-      //         lock.HoldOnDetectEnable = 0;
-      //         lock.HoldOnLatencyCnt = 0;
-      //         if(lock.lockState == LOCK_STATE_UNLOCK) lock.lockTaskState = LOCK_TASK_STATE_BACKWARD;//lock device
-      //     }
-      // }
+      if( lock.cmdControl.unlockFault.sendCmdDelay > 0)  lock.cmdControl.unlockFault.sendCmdDelay --;
 
       if(lock.ledTask.state == LED_TASK_STATE_FLASH){
           lock.ledTask.flashCnt ++;
@@ -130,15 +124,31 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         lock.ledTask.flashCnt = 0;
       }
 
-      /* unlock action only last 250ms */
+      /* unlock action only last 400ms */
       if(lock.lockTaskLatencyCnt > 0){
         lock.lockTaskLatencyCnt --;
         if(lock.lockTaskLatencyCnt == 0){
           app_set_lock_state(LOCK_STATE_LOCK);
           lock.lockTaskState = LOCK_TASK_STATE_IDLE;
+          lock.ledTask.state = LED_TASK_STATE_IDLE;
         }
       }
+
+      /* check manual lock operate */
+      if(lock.manulLockState != lock.lockState){
+        if(lock.manulLockState == LOCK_STATE_UNLOCK && lock.isReport){
+          /* 关锁 */
+          lock.cmdControl.reportOperateStatus.sendCmdEnable = CMD_ENABLE;
+          lock.cmdControl.reportOperateStatus.sendCmdDelay = 5;
+        }
+        lock.manulLockState = lock.lockState;
+      }
 			
+      if(lock.lockState == LOCK_STATE_UNLOCK) lock.cmdControl.unlockFault.sendCmdEnable = CMD_DISABLE;
+			
+			if(logInterval > 0) logInterval --;
+
+      if(lock.hx711Delay > 0) lock.hx711Delay --;
     }
 }
 /* USER CODE END 1 */

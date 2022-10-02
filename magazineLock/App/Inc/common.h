@@ -12,6 +12,9 @@
 
 #define DELAY_BASE                  (10)//100ms*10 = 1s
 #define FLASH_FREQ                  (1)
+#define FAULT_DECT                  (5*DELAY_BASE)
+
+#define HX711_SCALE                 ()
 
 enum {
     CMD_DISABLE = 0,
@@ -33,6 +36,7 @@ typedef struct {
     cmd_setting_t reportWeight;
     cmd_setting_t reportMagazineNum;
     cmd_setting_t clrDisp;
+    cmd_setting_t unlockFault;
 }cmd_control_t;
 
 typedef struct {
@@ -44,6 +48,7 @@ typedef struct {
 typedef struct {
     uint8_t lockDetectState;
     uint8_t lockState;
+    uint8_t manulLockState;
     uint8_t lockTaskState;
     uint16_t lockTaskLatencyCnt;
     uint16_t lockReplyDelay;
@@ -51,9 +56,11 @@ typedef struct {
     uint8_t  alarmStatus;
     uint8_t  isReport;
     uint8_t  address;
+    uint8_t faultType;
     uint8_t HoldOnDetectEnable;
     uint16_t HoldOnLatencyCnt;
     uint16_t magazineNum;
+    uint16_t hx711Delay;
     uint32_t magazineWeight;
     uint32_t lockDelay;
     uint32_t uid0;

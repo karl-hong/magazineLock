@@ -22,6 +22,9 @@ void Lock_Task(void)
 				oldState = LOCK_TASK_STATE_UNLOCK;
                 app_set_lock_state(LOCK_STATE_UNLOCK);
                 lock.lockTaskLatencyCnt = 4;
+                lock.faultType = LOCK_TASK_STATE_UNLOCK;
+                lock.cmdControl.unlockFault.sendCmdEnable = CMD_ENABLE;
+                lock.cmdControl.unlockFault.sendCmdDelay = FAULT_DECT;
 			}
 			break;
 		}

@@ -90,16 +90,12 @@ void onCmdSetDeviceStatus(uint8_t *data, uint16_t length, uint8_t ack)
         return;
     }
 out:
-    
-   // if(lock.lockState != lockSetState){
-        /* set dev state here */
-       if(lockSetState)    lock.lockTaskState = LOCK_TASK_STATE_IDLE;//lock
-       else                lock.lockTaskState = LOCK_TASK_STATE_UNLOCK;//unlock
-
+    /* set dev state here */
+    if(lockSetState == 0 && lock.lockDetectState){
+        lock.lockTaskState = LOCK_TASK_STATE_UNLOCK;//unlock
         /* set led state here */
         lock.ledTask.state = LED_TASK_STATE_FLASH;
-   // }
-    
+    }
     /* send ack msg here */
     if(ack){
         lock.cmdControl.operateResult.sendCmdEnable = CMD_ENABLE;
@@ -564,6 +560,28 @@ void onReportDevAlarm(uint8_t alarmType)
     user_protocol_send_data(CMD_QUERY, OPTION_MANUAL_ALARM, buffer, pos);     
 }
 
+void onReportUnlockFault(void)
+{
+    uint8_t buffer[23];
+    uint8_t pos = 0;
+    buffer[pos++] = lock.address;
+    buffer[pos++] = lock.faultType;
+    buffer[pos++] = (lock.uid0 >> 24)& 0xff;
+    buffer[pos++] = (lock.uid0 >> 16) & 0xff;
+    buffer[pos++] = (lock.uid0 >> 8) & 0xff;
+    buffer[pos++] = lock.uid0 & 0xff;
+    buffer[pos++] = (lock.uid1 >> 24)& 0xff;
+    buffer[pos++] = (lock.uid1 >> 16) & 0xff;
+    buffer[pos++] = (lock.uid1 >> 8) & 0xff;
+    buffer[pos++] = lock.uid1 & 0xff;
+    buffer[pos++] = (lock.uid2 >> 24)& 0xff;
+    buffer[pos++] = (lock.uid2 >> 16) & 0xff;
+    buffer[pos++] = (lock.uid2 >> 8) & 0xff;
+    buffer[pos++] = lock.uid2 & 0xff;
+
+    user_protocol_send_data(CMD_QUERY, OPTION_UNLOCK_FAULT, buffer, pos);   
+}
+
 void onReportWeight(void)
 {
     uint8_t buffer[23];
@@ -768,6 +786,11 @@ void user_reply_handle(void)
     if(lock.cmdControl.clrDisp.sendCmdEnable && !lock.cmdControl.clrDisp.sendCmdDelay){
         lock.cmdControl.clrDisp.sendCmdEnable = CMD_DISABLE;
         onReportClrDisp();
+    }
+
+    if(lock.cmdControl.unlockFault.sendCmdEnable && !lock.cmdControl.unlockFault.sendCmdDelay){
+        lock.cmdControl.unlockFault.sendCmdEnable = CMD_DISABLE;
+        onReportUnlockFault();
     }
 }
 

@@ -44,14 +44,16 @@ void HX711_task(void)
             data = data^0x800000;
             HAL_GPIO_WritePin(HX711_Sck_GPIO_Port, HX711_Sck_Pin, GPIO_PIN_RESET);
             /* get hx711 data here */
-			lock.magazineWeight = data;
+						lock.magazineWeight = data;
             /* goto next state */
             s_hx711_state = 0;
+						lock.hx711Delay = 10;//1s
             break;
         }
         
         case 0:
         default:{
+            if(lock.hx711Delay > 0) break;
             HAL_GPIO_WritePin(HX711_Sck_GPIO_Port, HX711_Sck_Pin, GPIO_PIN_RESET);
             s_hx711_state = 1;
 						s_hx711_busy_cnt = 0;

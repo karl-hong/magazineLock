@@ -100,13 +100,14 @@ void lock_state_detect(void)
   lock.lockDetectState = HAL_GPIO_ReadPin(Lock_Dect_GPIO_Port, Lock_Dect_Pin);
   if(lock.lockDetectState)  lock.lockState = LOCK_STATE_LOCK;
   else                      lock.lockState = LOCK_STATE_UNLOCK;
+  lock.manulLockState = lock.lockState;
 }
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if(Lock_Dect_Pin == GPIO_Pin){
-		lock_state_detect();
+		lock.lockDetectState = HAL_GPIO_ReadPin(Lock_Dect_GPIO_Port, Lock_Dect_Pin);
+    lock.lockState = lock.lockDetectState;
 	}
 }
-
 
 /* USER CODE END 2 */
