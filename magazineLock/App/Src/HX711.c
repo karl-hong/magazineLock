@@ -30,6 +30,7 @@ void HX711_task(void)
         case 2:{
             /* read out hx711 data */
             uint32_t data = 0;
+            uint32_t abs_data = 0;
             uint8_t i;
             for(i=0;i<24;i++){
                 HAL_GPIO_WritePin(HX711_Sck_GPIO_Port, HX711_Sck_Pin, GPIO_PIN_SET);
@@ -43,8 +44,18 @@ void HX711_task(void)
             HAL_GPIO_WritePin(HX711_Sck_GPIO_Port, HX711_Sck_Pin, GPIO_PIN_SET);
             data = data^0x800000;
             HAL_GPIO_WritePin(HX711_Sck_GPIO_Port, HX711_Sck_Pin, GPIO_PIN_RESET);
+
+            /* 获取绝对值 */
+            if(data >= 0x800000){
+              /* 负数，获取原码 */
+              abs_data = ~(data -1);
+              abs_data &= 0x7fffff;
+            }else{
+              /* 正数，原码与补码一样 */
+              abs_data = data;
+            }
             /* get hx711 data here */
-						lock.magazineWeight = data;
+						lock.magazineWeight = abs_data * 1000 / HX711_FULL_RANGE * 1000 * HX711_AVDD / 2 / HX711_GAIN;
             /* goto next state */
             s_hx711_state = 0;
 						lock.hx711Delay = 10;//1s

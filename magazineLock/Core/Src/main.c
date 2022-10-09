@@ -118,9 +118,7 @@ int main(void)
     user_reply_handle();
 		if(logInterval == 0){
 			logInterval = 30;
-			static uint32_t weight = 0;
-			if(weight == 0 && !lock.magazineWeight)	weight = lock.magazineWeight;
-			printf("hx711 data: %d,  %dmg\r\n", lock.magazineWeight, (lock.magazineWeight - weight)  * 1000 * 1000 * 35 / 4292588);
+			printf("hx711 data: %dmV\r\n", lock.magazineWeight);
 		}
   }
   /* USER CODE END 3 */

@@ -14,7 +14,9 @@
 #define FLASH_FREQ                  (1)
 #define FAULT_DECT                  (5*DELAY_BASE)
 
-#define HX711_SCALE                 ()
+#define HX711_FULL_RANGE            (0x800000)
+#define HX711_AVDD                  (4514/1000)
+#define HX711_GAIN                  (128)
 
 enum {
     CMD_DISABLE = 0,
