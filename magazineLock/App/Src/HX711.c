@@ -19,15 +19,13 @@ void HX711_task(void)
 								s_hx711_busy_cnt ++;
 								if(s_hx711_busy_cnt > 1000){
 									s_hx711_state = 0;
+                  lock.hx711Delay = 10;//1s
+                  lock.magazineWeight = 0;
+                  //printf("hx711 error!!!\r\n");
 								}
                 return;
             }
-            /* HX711 data is ready, goto next state */
-            s_hx711_state = 2;
-            break;
-        }
 
-        case 2:{
             /* read out hx711 data */
             uint32_t data = 0;
             uint32_t abs_data = 0;
@@ -46,16 +44,28 @@ void HX711_task(void)
             HAL_GPIO_WritePin(HX711_Sck_GPIO_Port, HX711_Sck_Pin, GPIO_PIN_RESET);
 
             /* 获取绝对值 */
+            // if(data >= 0x800000){
+            //   /* 负数，获取原码 */
+            //   abs_data = data & 0x7fffff;
+            //   abs_data = ~(abs_data -1);
+            //   abs_data &= 0x7fffff;
+            // }else{
+            //   /* 正数，原码与补码一样 */
+            //   abs_data = data;
+            // }
+            /* 
+            * 上面data = data ^ 0x800000;是将二进制补码换算为0x0~0xFFFFFF
+            */
             if(data >= 0x800000){
-              /* 负数，获取原码 */
-              abs_data = ~(data -1);
-              abs_data &= 0x7fffff;
+              abs_data = data - 0x800000;
             }else{
-              /* 正数，原码与补码一样 */
-              abs_data = data;
+              abs_data = 0x800000 -data;
             }
             /* get hx711 data here */
+            //lock.magazineWeight = data;
 						lock.magazineWeight = abs_data * 1000 / HX711_FULL_RANGE * 1000 * HX711_AVDD / 2 / HX711_GAIN;
+            //lock.magazineNum = lock.magazineWeight;
+            //printf("org: 0x%x, abs_data: 0x%x\r\n", data, abs_data);
             /* goto next state */
             s_hx711_state = 0;
 						lock.hx711Delay = 10;//1s

@@ -118,7 +118,7 @@ int main(void)
     user_reply_handle();
 		if(logInterval == 0){
 			logInterval = 30;
-			printf("hx711 data: %dmV\r\n", lock.magazineWeight);
+			printf("hx711 data: %d mV\r\n", lock.magazineWeight);
 		}
   }
   /* USER CODE END 3 */
