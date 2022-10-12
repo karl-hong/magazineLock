@@ -56,19 +56,19 @@ void HX711_task(void)
             /* 
             * 上面data = data ^ 0x800000;是将二进制补码换算为0x0~0xFFFFFF
             */
-            if(data >= 0x800000){
-              abs_data = data - 0x800000;
-            }else{
-              abs_data = 0x800000 -data;
-            }
+            // if(data >= 0x800000){
+            //   abs_data = data - 0x800000;
+            // }else{
+            //   abs_data = 0x800000 -data;
+            // }
             /* get hx711 data here */
-            //lock.magazineWeight = data;
-						lock.magazineWeight = abs_data * 1000 / HX711_FULL_RANGE * 1000 * HX711_AVDD / 2 / HX711_GAIN;
+            lock.magazineWeight = data;
+						//lock.magazineWeight = abs_data * 1000 / HX711_FULL_RANGE * 1000 * HX711_AVDD / 2 / HX711_GAIN;
             //lock.magazineNum = lock.magazineWeight;
             //printf("org: 0x%x, abs_data: 0x%x\r\n", data, abs_data);
             /* goto next state */
             s_hx711_state = 0;
-						lock.hx711Delay = 10;//1s
+						lock.hx711Delay = 5;//1s
             break;
         }
         

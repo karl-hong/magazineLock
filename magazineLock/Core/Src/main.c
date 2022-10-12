@@ -118,7 +118,16 @@ int main(void)
     user_reply_handle();
 		if(logInterval == 0){
 			logInterval = 30;
-			printf("hx711 data: %d mV\r\n", lock.magazineWeight);
+      static uint32_t init_weight = 0;
+      static uint32_t actual_weight = 0;
+      if(init_weight == 0 && lock.magazineWeight){
+        init_weight = lock.magazineWeight;
+      }
+      if(lock.magazineWeight >= init_weight){
+        actual_weight = lock.magazineWeight - init_weight;
+        actual_weight = actual_weight * 20 * 1000 / 206000;//2147483;
+      }
+			printf("hx711 weight: %d.%d g\r\n", actual_weight / 10, actual_weight % 10);
 		}
   }
   /* USER CODE END 3 */
