@@ -3,7 +3,7 @@
 <title>Static Call Graph - [magazineLock\magazineLock.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image magazineLock\magazineLock.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Wed Oct 12 23:18:58 2022
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5050106: Last Updated: Wed Oct 26 00:39:12 2022
 <BR><P>
 <H3>Maximum Stack Usage =        416 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -602,7 +602,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_IRQHandler
 </UL>
 
-<P><STRONG><a name="[60]"></a>HAL_TIM_PeriodElapsedCallback</STRONG> (Thumb, 218 bytes, Stack size 16 bytes, tim.o(i.HAL_TIM_PeriodElapsedCallback))
+<P><STRONG><a name="[60]"></a>HAL_TIM_PeriodElapsedCallback</STRONG> (Thumb, 212 bytes, Stack size 16 bytes, tim.o(i.HAL_TIM_PeriodElapsedCallback))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = HAL_TIM_PeriodElapsedCallback &rArr; app_set_lock_state
 </UL>
 <BR>[Calls]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_set_lock_state
@@ -964,7 +964,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[23]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[23]"></a>main</STRONG> (Thumb, 132 bytes, Stack size 0 bytes, main.o(i.main))
+<P><STRONG><a name="[23]"></a>main</STRONG> (Thumb, 122 bytes, Stack size 0 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 416<LI>Call Chain = main &rArr; user_protocol_handle &rArr; user_event_process &rArr; onCmdModifyDeviceSetting &rArr; user_database_save &rArr; HAL_FLASH_Program &rArr; FLASH_WaitForLastOperation &rArr; FLASH_SetErrorCode
 </UL>
 <BR>[Calls]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;user_reply_handle
@@ -1029,7 +1029,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;user_event_process
 </UL>
 
-<P><STRONG><a name="[97]"></a>onCmdSetDeviceStatus</STRONG> (Thumb, 170 bytes, Stack size 24 bytes, user_data.o(i.onCmdSetDeviceStatus))
+<P><STRONG><a name="[97]"></a>onCmdSetDeviceStatus</STRONG> (Thumb, 164 bytes, Stack size 24 bytes, user_data.o(i.onCmdSetDeviceStatus))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = onCmdSetDeviceStatus &rArr; __2printf
 </UL>
 <BR>[Calls]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
@@ -1045,11 +1045,10 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;user_event_process
 </UL>
 
-<P><STRONG><a name="[99]"></a>onCmdSetLedFlash</STRONG> (Thumb, 154 bytes, Stack size 24 bytes, user_data.o(i.onCmdSetLedFlash))
-<BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = onCmdSetLedFlash &rArr; user_database_save &rArr; HAL_FLASH_Program &rArr; FLASH_WaitForLastOperation &rArr; FLASH_SetErrorCode
+<P><STRONG><a name="[99]"></a>onCmdSetLedFlash</STRONG> (Thumb, 152 bytes, Stack size 24 bytes, user_data.o(i.onCmdSetLedFlash))
+<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = onCmdSetLedFlash &rArr; __2printf
 </UL>
-<BR>[Calls]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;user_database_save
-<LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
+<BR>[Calls]<UL><LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;user_event_process
 </UL>
@@ -1203,7 +1202,6 @@ Global Symbols
 <LI><a href="#[3c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;user_database_init
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;onCmdSetLedFlash
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;onCmdModifyDeviceSetting
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;onCmdClrDevAlarmSetting
 </UL>

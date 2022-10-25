@@ -182,7 +182,7 @@ PTL_STATUS ComPack(const Pack_t*  pPack, ComStream_t* outStream)
 
 void user_event_process(uint8_t cmd, uint8_t opt, uint8_t *data, uint16_t lenOfData)
 {
-	printf("cmd: 0x%2x, opt code: 0x%2x\r\n", cmd, opt);
+	printf("cmd: 0x%02x, opt code: 0x%02x\r\n", cmd, opt);
 	switch(cmd){
 		case CMD_QUERY:{
 			switch (opt)

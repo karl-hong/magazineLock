@@ -66,6 +66,7 @@ void HX711_task(void)
 						//lock.magazineWeight = abs_data * 1000 / HX711_FULL_RANGE * 1000 * HX711_AVDD / 2 / HX711_GAIN;
             //lock.magazineNum = lock.magazineWeight;
             //printf("org: 0x%x, abs_data: 0x%x\r\n", data, abs_data);
+						//printf("data: 0x%x\r\n", data);
             /* goto next state */
             s_hx711_state = 0;
 						lock.hx711Delay = 5;//1s

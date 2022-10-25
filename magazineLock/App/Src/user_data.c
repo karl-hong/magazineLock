@@ -94,7 +94,7 @@ out:
     if(lockSetState == 0 && lock.lockDetectState){
         lock.lockTaskState = LOCK_TASK_STATE_UNLOCK;//unlock
         /* set led state here */
-        lock.ledTask.state = LED_TASK_STATE_FLASH;
+        // lock.ledTask.state = LED_TASK_STATE_FLASH;
     }
     /* send ack msg here */
     if(ack){
@@ -121,7 +121,7 @@ void onCmdModifyDeviceSetting(uint8_t *data, uint16_t length, uint8_t ack)
     }
 
     if(ack) cmdLength = 13;//18;
-    else    cmdLength = 6;
+    else    cmdLength = 1;
 
     if(cmdLength > length){
         printf("[%s]length error!\r\n", __FUNCTION__);
@@ -227,8 +227,10 @@ void onCmdSetLedFlash(uint8_t *data, uint16_t length, uint8_t ack)
     }
 out:
     /* set led flash here */
-    lock.ledFlashStatus = isFlash;
-    user_database_save();
+    // lock.ledFlashStatus = isFlash;
+    // user_database_save();
+
+    lock.ledTask.state = isFlash;
     /* send ack msg here */
     if(ack){
         lock.cmdControl.ledFlashSetting.sendCmdEnable = CMD_ENABLE;

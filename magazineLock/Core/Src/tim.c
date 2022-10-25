@@ -130,14 +130,19 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         if(lock.lockTaskLatencyCnt == 0){
           app_set_lock_state(LOCK_STATE_LOCK);
           lock.lockTaskState = LOCK_TASK_STATE_IDLE;
-          lock.ledTask.state = LED_TASK_STATE_IDLE;
+          //lock.ledTask.state = LED_TASK_STATE_IDLE;
         }
       }
 
       /* check manual lock operate */
       if(lock.manulLockState != lock.lockState){
-        if(lock.manulLockState == LOCK_STATE_UNLOCK && lock.isReport){
-          /* 关锁 */
+        // if(lock.manulLockState == LOCK_STATE_UNLOCK && lock.isReport){
+        //   /* 关锁 */
+        //   lock.cmdControl.reportOperateStatus.sendCmdEnable = CMD_ENABLE;
+        //   lock.cmdControl.reportOperateStatus.sendCmdDelay = 5;
+        // }
+        if(lock.isReport){
+          /* 手动开关锁上报 */
           lock.cmdControl.reportOperateStatus.sendCmdEnable = CMD_ENABLE;
           lock.cmdControl.reportOperateStatus.sendCmdDelay = 5;
         }

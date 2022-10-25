@@ -53,6 +53,7 @@
 /* USER CODE BEGIN PV */
 lock_ctrl_t lock;
 uint16_t logInterval = 0;
+uint64_t u64ActWeight;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -125,9 +126,10 @@ int main(void)
       }
       if(lock.magazineWeight >= init_weight){
         actual_weight = lock.magazineWeight - init_weight;
-        actual_weight = actual_weight * 20 * 1000 / 206000;//2147483;
+        actual_weight = actual_weight * 30 / 4456;//000;//206000;//2147483;
       }
-			printf("hx711 weight: %d.%d g\r\n", actual_weight / 10, actual_weight % 10);
+			//printf("hx711 weight: %d kg\r\n", actual_weight);
+			printf("hx711 weight: %d g\r\n", actual_weight);
 		}
   }
   /* USER CODE END 3 */
