@@ -227,7 +227,7 @@ void onCmdSetLedFlash(uint8_t *data, uint16_t length, uint8_t ack)
     }
 out:
     /* set led flash here */
-    // lock.ledFlashStatus = isFlash;
+    lock.ledFlashStatus = isFlash;
     // user_database_save();
 
     lock.ledTask.state = isFlash;
