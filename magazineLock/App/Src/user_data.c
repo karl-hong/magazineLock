@@ -589,6 +589,7 @@ void onReportWeight(void)
     uint8_t buffer[23];
     uint8_t pos = 0;
     buffer[pos++] = lock.address;
+    buffer[pos++] = (lock.magazineWeight >> 24) & 0xff;
     buffer[pos++] = (lock.magazineWeight >> 16) & 0xff;
     buffer[pos++] = (lock.magazineWeight >> 8) & 0xff;
     buffer[pos++] = lock.magazineWeight & 0xff;
