@@ -163,7 +163,7 @@ static void I2C_Wait_Ack(void)
 	delay_us(TIME_UINT);
 	SCL_Dout_HIGH();
 
-	while(SDA_Data_IN() && i <= 10) {
+	while(SDA_Data_IN() && i <= 100) {
 		i++;
 	}
 
@@ -187,14 +187,16 @@ static void I2C_Wait_Ack(void)
   */
 static void I2C_Ack(void)
 {
-
+	uint16_t i = 0;
 	SCL_Dout_LOW();
 	delay_us(TIME_UINT);
 
 	SDA_Input();
 	SCL_Dout_HIGH();
 
-	while(SDA_Data_IN());
+	while(SDA_Data_IN() && i <= 100){
+		i++;
+	}
 	SDA_Output();
 
 	delay_us(TIME_UINT);
