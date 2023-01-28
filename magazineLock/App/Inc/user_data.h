@@ -18,6 +18,10 @@ void onCmdSetDispContent(uint8_t *data, uint16_t length);
 
 void onCmdClrDispContent(uint8_t *data, uint16_t length, uint8_t ack);
 
+void onCmdSetCalibrationParam(uint8_t *data, uint16_t length);
+
+void onCmdGetCalibrationParam(uint8_t *data, uint16_t length);
+
 void onCmdSetDeviceStatusByAddr(uint8_t *data, uint16_t length);
 
 void onCmdSetLedFlashByAddr(uint8_t *data, uint16_t length);
@@ -43,6 +47,10 @@ void onReportWeight(void);
 void onReportMagazineNum(void);
 
 void onReportClrDisp(void);
+
+void onReportSetCalibrationParam(void);
+
+void onReportGetCalibrationParam(void);
 
 void user_database_init(void);
 

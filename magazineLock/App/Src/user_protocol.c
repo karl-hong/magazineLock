@@ -252,6 +252,16 @@ void user_event_process(uint8_t cmd, uint8_t opt, uint8_t *data, uint16_t lenOfD
 					break;
 				}
 
+				case OPTION_SET_CALIBRATION_PARAM:{
+					onCmdSetCalibrationParam(data, lenOfData);
+					break;
+				}
+
+				case OPTION_GET_CALIBRATION_PARAM:{
+					onCmdGetCalibrationParam(data, lenOfData);
+					break;
+				}
+
 				case OPTION_SET_DEV_STATUS_BY_ADDR:{
 					onCmdSetDeviceStatusByAddr(data, lenOfData);
 					break;

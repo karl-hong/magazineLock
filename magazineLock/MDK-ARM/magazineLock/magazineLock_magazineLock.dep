@@ -39,10 +39,10 @@ I (../Core/Inc/tim.h)(0x63301595)
 I (../Core/Inc/usart.h)(0x63301596)
 I (../Core/Inc/gpio.h)(0x6335B6B7)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (../App/Inc/user_protocol.h)(0x63D551A2)
+I (../App/Inc/user_protocol.h)(0x63D55788)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
-I (../App/Inc/common.h)(0x63581061)
-I (../App/Inc/user_data.h)(0x63D55075)
+I (../App/Inc/common.h)(0x63D554CA)
+I (../App/Inc/user_data.h)(0x63D555E9)
 I (../App/Inc/AiP650.h)(0x63332F48)
 I (../App/Inc/led.h)(0x6332BAE6)
 I (../App/Inc/HX711.h)(0x6335C687)
@@ -83,7 +83,7 @@ I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim_ex.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart_ex.h)(0x63009401)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (../App/Inc/common.h)(0x63581061)
+I (../App/Inc/common.h)(0x63D554CA)
 F (../Core/Src/iwdg.c)(0x635816EE)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I../Drivers/CMSIS/Include -I../App/Inc-I F:\experience\magazineLock\magazineLock\MDK-ARM\RTE-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include"-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0"-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F051x8 -DUSE_HAL_DRIVER -DSTM32F051x8-o magazinelock\iwdg.o --omf_browse magazinelock\iwdg.crf --depend magazinelock\iwdg.d)
 I (../Core/Inc/iwdg.h)(0x6358170F)
 I (../Core/Inc/main.h)(0x6330159A)
@@ -119,7 +119,7 @@ I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim_ex.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart_ex.h)(0x63009401)
-F (../Core/Src/tim.c)(0x63581667)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I../Drivers/CMSIS/Include -I../App/Inc-I F:\experience\magazineLock\magazineLock\MDK-ARM\RTE-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include"-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0"-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F051x8 -DUSE_HAL_DRIVER -DSTM32F051x8-o magazinelock\tim.o --omf_browse magazinelock\tim.crf --depend magazinelock\tim.d)
+F (../Core/Src/tim.c)(0x63D554CA)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I../Drivers/CMSIS/Include -I../App/Inc-I F:\experience\magazineLock\magazineLock\MDK-ARM\RTE-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include"-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0"-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F051x8 -DUSE_HAL_DRIVER -DSTM32F051x8-o magazinelock\tim.o --omf_browse magazinelock\tim.crf --depend magazinelock\tim.d)
 I (../Core/Inc/tim.h)(0x63301595)
 I (../Core/Inc/main.h)(0x6330159A)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h)(0x63009401)
@@ -154,7 +154,7 @@ I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim_ex.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart_ex.h)(0x63009401)
-I (../App/Inc/common.h)(0x63581061)
+I (../App/Inc/common.h)(0x63D554CA)
 F (../Core/Src/usart.c)(0x633323F4)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I../Drivers/CMSIS/Include -I../App/Inc-I F:\experience\magazineLock\magazineLock\MDK-ARM\RTE-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include"-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0"-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F051x8 -DUSE_HAL_DRIVER -DSTM32F051x8-o magazinelock\usart.o --omf_browse magazinelock\usart.crf --depend magazinelock\usart.d)
 I (../Core/Inc/usart.h)(0x63301596)
 I (../Core/Inc/main.h)(0x6330159A)
@@ -191,7 +191,7 @@ I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim_ex.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart_ex.h)(0x63009401)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (../App/Inc/user_protocol.h)(0x63D551A2)
+I (../App/Inc/user_protocol.h)(0x63D55788)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
 F (../Core/Src/stm32f0xx_it.c)(0x633323F5)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I../Drivers/CMSIS/Include -I../App/Inc-I F:\experience\magazineLock\magazineLock\MDK-ARM\RTE-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include"-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0"-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F051x8 -DUSE_HAL_DRIVER -DSTM32F051x8-o magazinelock\stm32f0xx_it.o --omf_browse magazinelock\stm32f0xx_it.crf --depend magazinelock\stm32f0xx_it.d)
 I (../Core/Inc/main.h)(0x6330159A)
@@ -924,7 +924,7 @@ I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim_ex.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart_ex.h)(0x63009401)
-I (../App/Inc/common.h)(0x63581061)
+I (../App/Inc/common.h)(0x63D554CA)
 F (..\App\Src\HX711.c)(0x634BFFD2)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I../Drivers/CMSIS/Include -I../App/Inc-I F:\experience\magazineLock\magazineLock\MDK-ARM\RTE-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include"-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0"-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F051x8 -DUSE_HAL_DRIVER -DSTM32F051x8-o magazinelock\hx711.o --omf_browse magazinelock\hx711.crf --depend magazinelock\hx711.d)
 I (../App/Inc/HX711.h)(0x6335C687)
 I (../Core/Inc/main.h)(0x6330159A)
@@ -962,10 +962,10 @@ I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart_ex.h)(0x63009401)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (../App/Inc/common.h)(0x63581061)
+I (../App/Inc/common.h)(0x63D554CA)
 F (..\App\Src\led.c)(0x6332C153)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I../Drivers/CMSIS/Include -I../App/Inc-I F:\experience\magazineLock\magazineLock\MDK-ARM\RTE-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include"-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0"-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F051x8 -DUSE_HAL_DRIVER -DSTM32F051x8-o magazinelock\led.o --omf_browse magazinelock\led.crf --depend magazinelock\led.d)
 I (../App/Inc/led.h)(0x6332BAE6)
-I (../App/Inc/common.h)(0x63581061)
+I (../App/Inc/common.h)(0x63D554CA)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5475F300)
 I (../Core/Inc/gpio.h)(0x6335B6B7)
 I (../Core/Inc/main.h)(0x6330159A)
@@ -1035,7 +1035,7 @@ I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim_ex.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart_ex.h)(0x63009401)
-I (../App/Inc/common.h)(0x63581061)
+I (../App/Inc/common.h)(0x63D554CA)
 I (../Core/Inc/gpio.h)(0x6335B6B7)
 F (..\App\Src\user_buffer.c)(0x63156893)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I../Drivers/CMSIS/Include -I../App/Inc-I F:\experience\magazineLock\magazineLock\MDK-ARM\RTE-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include"-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0"-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F051x8 -DUSE_HAL_DRIVER -DSTM32F051x8-o magazinelock\user_buffer.o --omf_browse magazinelock\user_buffer.crf --depend magazinelock\user_buffer.d)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5475F300)
@@ -1049,12 +1049,12 @@ I (..\App\Inc\user_crc.h)(0x63156893)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5475F300)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5475F300)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
-F (..\App\Src\user_data.c)(0x63D55035)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I../Drivers/CMSIS/Include -I../App/Inc-I F:\experience\magazineLock\magazineLock\MDK-ARM\RTE-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include"-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0"-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F051x8 -DUSE_HAL_DRIVER -DSTM32F051x8-o magazinelock\user_data.o --omf_browse magazinelock\user_data.crf --depend magazinelock\user_data.d)
+F (..\App\Src\user_data.c)(0x63D55734)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I../Drivers/CMSIS/Include -I../App/Inc-I F:\experience\magazineLock\magazineLock\MDK-ARM\RTE-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include"-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0"-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F051x8 -DUSE_HAL_DRIVER -DSTM32F051x8-o magazinelock\user_data.o --omf_browse magazinelock\user_data.crf --depend magazinelock\user_data.d)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (../App/Inc/user_data.h)(0x63D55075)
+I (../App/Inc/user_data.h)(0x63D555E9)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5475F300)
-I (../App/Inc/common.h)(0x63581061)
-I (../App/Inc/user_protocol.h)(0x63D551A2)
+I (../App/Inc/common.h)(0x63D554CA)
+I (../App/Inc/user_protocol.h)(0x63D55788)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h)(0x63009401)
 I (../Core/Inc/stm32f0xx_hal_conf.h)(0x63581544)
@@ -1087,13 +1087,13 @@ I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim_ex.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart.h)(0x63009401)
 I (../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart_ex.h)(0x63009401)
-F (..\App\Src\user_protocol.c)(0x63D55190)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I../Drivers/CMSIS/Include -I../App/Inc-I F:\experience\magazineLock\magazineLock\MDK-ARM\RTE-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include"-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0"-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F051x8 -DUSE_HAL_DRIVER -DSTM32F051x8-o magazinelock\user_protocol.o --omf_browse magazinelock\user_protocol.crf --depend magazinelock\user_protocol.d)
+F (..\App\Src\user_protocol.c)(0x63D557B9)(--c99 -c --cpu Cortex-M0 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I../Core/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I../Drivers/CMSIS/Include -I../App/Inc-I F:\experience\magazineLock\magazineLock\MDK-ARM\RTE-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include"-I "E:\Program Files (x86)\Keil_v5\ARM\PACK\Keil\STM32F0xx_DFP\2.0.0"-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F051x8 -DUSE_HAL_DRIVER -DSTM32F051x8-o magazinelock\user_protocol.o --omf_browse magazinelock\user_protocol.crf --depend magazinelock\user_protocol.d)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\string.h)(0x5475F300)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5475F300)
-I (../App/Inc/user_protocol.h)(0x63D551A2)
+I (../App/Inc/user_protocol.h)(0x63D55788)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5475F300)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
 I (../App/Inc/user_crc.h)(0x63156893)
 I (E:\Program Files (x86)\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5475F300)
 I (../App/Inc/user_buffer.h)(0x63156893)
-I (../App/Inc/user_data.h)(0x63D55075)
+I (../App/Inc/user_data.h)(0x63D555E9)

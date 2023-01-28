@@ -113,6 +113,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
       if( lock.cmdControl.unlockFault.sendCmdDelay > 0)  lock.cmdControl.unlockFault.sendCmdDelay --;
 
+      if( lock.cmdControl.setCalibrationParamAck.sendCmdDelay > 0)  lock.cmdControl.setCalibrationParamAck.sendCmdDelay --;
+
+      if( lock.cmdControl.getCalibrationParamAck.sendCmdDelay > 0)  lock.cmdControl.getCalibrationParamAck.sendCmdDelay --;
+
       if(lock.ledTask.state == LED_TASK_STATE_FLASH){
           lock.ledTask.flashCnt ++;
           if(FLASH_FREQ <= lock.ledTask.flashCnt){

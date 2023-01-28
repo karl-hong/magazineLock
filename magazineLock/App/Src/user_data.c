@@ -417,6 +417,104 @@ out:
     // user_database_save();
 }
 
+void onCmdSetCalibrationParam(uint8_t *data, uint16_t length)
+{
+    uint32_t uid0;
+    uint32_t uid1;
+    uint32_t uid2;
+    uint8_t valueK[6];
+    uint8_t valueB[6];
+    uint16_t pos = 0;
+
+    if(length < 24){
+        printf("[%s]length error!\r\n", __FUNCTION__);
+        return;
+    }
+
+    valueK[0] = data[pos++];
+    valueK[1] = data[pos++];
+    valueK[2] = data[pos++];
+    valueK[3] = data[pos++];
+    valueK[4] = data[pos++];
+    valueK[5] = data[pos++];
+
+    valueB[0] = data[pos++];
+    valueB[1] = data[pos++];
+    valueB[2] = data[pos++];
+    valueB[3] = data[pos++];
+    valueB[4] = data[pos++];
+    valueB[5] = data[pos++];
+
+    uid0 = (data[pos++] << 24);
+    uid0 += (data[pos++] << 16);
+    uid0 += (data[pos++] << 8);
+    uid0 += data[pos++];
+
+    uid1 = (data[pos++] << 24);
+    uid1 += (data[pos++] << 16);
+    uid1 += (data[pos++] << 8);
+    uid1 += data[pos++];
+
+    uid2 = (data[pos++] << 24);
+    uid2 += (data[pos++] << 16);
+    uid2 += (data[pos++] << 8);
+    uid2 += data[pos++];
+
+    if(lock.uid0 != uid0 || lock.uid1 != uid1 || lock.uid2 != uid2){
+        printf("[%s]UID is not matched!\r\n", __FUNCTION__);
+        return;
+    }
+    /* set calibration param */
+    for(uint8_t i=0;i<6;i++){
+        lock.valueK[i] = valueK[i];
+        lock.valueB[i] = valueB[i];
+    }
+
+    /* send calibration param msg here */
+    lock.cmdControl.setCalibrationParamAck.sendCmdEnable = CMD_ENABLE;
+    lock.cmdControl.setCalibrationParamAck.sendCmdDelay = 0;
+
+    /* save calibration */
+    user_database_save();
+}
+
+void onCmdGetCalibrationParam(uint8_t *data, uint16_t length)
+{
+    uint32_t uid0;
+    uint32_t uid1;
+    uint32_t uid2;
+    uint16_t pos = 0;
+
+    if(length < 12){
+        printf("[%s]length error!\r\n", __FUNCTION__);
+        return;
+    }
+
+    uid0 = (data[pos++] << 24);
+    uid0 += (data[pos++] << 16);
+    uid0 += (data[pos++] << 8);
+    uid0 += data[pos++];
+
+    uid1 = (data[pos++] << 24);
+    uid1 += (data[pos++] << 16);
+    uid1 += (data[pos++] << 8);
+    uid1 += data[pos++];
+
+    uid2 = (data[pos++] << 24);
+    uid2 += (data[pos++] << 16);
+    uid2 += (data[pos++] << 8);
+    uid2 += data[pos++];
+
+    if(lock.uid0 != uid0 || lock.uid1 != uid1 || lock.uid2 != uid2){
+        printf("[%s]UID is not matched!\r\n", __FUNCTION__);
+        return;
+    }
+
+    /* send calibration param msg here */
+    lock.cmdControl.getCalibrationParamAck.sendCmdEnable = CMD_ENABLE;
+    lock.cmdControl.getCalibrationParamAck.sendCmdDelay = 0;
+}
+
 void onCmdSetDeviceStatusByAddr(uint8_t *data, uint16_t length)
 {
     uint16_t pos = 0;
@@ -778,6 +876,70 @@ void onReportClrDisp(void)
     user_protocol_send_data(CMD_ACK, OPTION_CLR_SIGNLE_LOCK_DISP_CONTENT, buffer, pos);    
 }
 
+void onReportSetCalibrationParam(void)
+{
+    uint8_t buffer[30];
+    uint8_t pos = 0;
+    buffer[pos++] = lock.valueK[0];
+    buffer[pos++] = lock.valueK[1];
+    buffer[pos++] = lock.valueK[2];
+    buffer[pos++] = lock.valueK[3];
+    buffer[pos++] = lock.valueK[4];
+    buffer[pos++] = lock.valueK[5];
+    buffer[pos++] = lock.valueB[0];
+    buffer[pos++] = lock.valueB[1];
+    buffer[pos++] = lock.valueB[2];
+    buffer[pos++] = lock.valueB[3];
+    buffer[pos++] = lock.valueB[4];
+    buffer[pos++] = lock.valueB[5];
+    buffer[pos++] = (lock.uid0 >> 24)& 0xff;
+    buffer[pos++] = (lock.uid0 >> 16) & 0xff;
+    buffer[pos++] = (lock.uid0 >> 8) & 0xff;
+    buffer[pos++] = lock.uid0 & 0xff;
+    buffer[pos++] = (lock.uid1 >> 24)& 0xff;
+    buffer[pos++] = (lock.uid1 >> 16) & 0xff;
+    buffer[pos++] = (lock.uid1 >> 8) & 0xff;
+    buffer[pos++] = lock.uid1 & 0xff;
+    buffer[pos++] = (lock.uid2 >> 24)& 0xff;
+    buffer[pos++] = (lock.uid2 >> 16) & 0xff;
+    buffer[pos++] = (lock.uid2 >> 8) & 0xff;
+    buffer[pos++] = lock.uid2 & 0xff;
+
+    user_protocol_send_data(CMD_ACK, OPTION_SET_CALIBRATION_PARAM, buffer, pos); 
+}
+
+void onReportGetCalibrationParam(void)
+{
+    uint8_t buffer[30];
+    uint8_t pos = 0;
+    buffer[pos++] = lock.valueK[0];
+    buffer[pos++] = lock.valueK[1];
+    buffer[pos++] = lock.valueK[2];
+    buffer[pos++] = lock.valueK[3];
+    buffer[pos++] = lock.valueK[4];
+    buffer[pos++] = lock.valueK[5];
+    buffer[pos++] = lock.valueB[0];
+    buffer[pos++] = lock.valueB[1];
+    buffer[pos++] = lock.valueB[2];
+    buffer[pos++] = lock.valueB[3];
+    buffer[pos++] = lock.valueB[4];
+    buffer[pos++] = lock.valueB[5];
+    buffer[pos++] = (lock.uid0 >> 24)& 0xff;
+    buffer[pos++] = (lock.uid0 >> 16) & 0xff;
+    buffer[pos++] = (lock.uid0 >> 8) & 0xff;
+    buffer[pos++] = lock.uid0 & 0xff;
+    buffer[pos++] = (lock.uid1 >> 24)& 0xff;
+    buffer[pos++] = (lock.uid1 >> 16) & 0xff;
+    buffer[pos++] = (lock.uid1 >> 8) & 0xff;
+    buffer[pos++] = lock.uid1 & 0xff;
+    buffer[pos++] = (lock.uid2 >> 24)& 0xff;
+    buffer[pos++] = (lock.uid2 >> 16) & 0xff;
+    buffer[pos++] = (lock.uid2 >> 8) & 0xff;
+    buffer[pos++] = lock.uid2 & 0xff;
+
+    user_protocol_send_data(CMD_ACK, OPTION_GET_CALIBRATION_PARAM, buffer, pos); 
+}
+
 uint16_t user_read_flash(uint32_t address)
 {
     return *(__IO uint16_t*)address;
@@ -808,6 +970,10 @@ void user_database_init(void)
         lock.lockReplyDelay = DEFAULT_LOCK_REPLY_DELAY;
         lock.isReport = DEFAULT_LOCK_REPORT;
         lock.ledFlashStatus = DEFAULT_LOCK_LED_FLASH;
+        for(i=0;i<6;i++){
+            lock.valueK[i] = DEFAULT_CALI_VALUE;
+            lock.valueB[i] = DEFAULT_CALI_VALUE;
+        }
         user_database_save();
     }else{
         printf("Read database from flash!!!\r\n");
@@ -817,6 +983,10 @@ void user_database_init(void)
         lock.lockReplyDelay = readDataBase.lockReplyDelay;
         lock.isReport = (uint8_t)readDataBase.isReport;
         lock.ledFlashStatus = (uint8_t)readDataBase.ledFlash;
+        for(i=0;i<6;i++){
+            lock.valueK[i] = readDataBase.valueK[i];
+            lock.valueB[i] = readDataBase.valueB[i];
+        }
     }
 
     printf("Chip uuid: 0x%x%x%x\r\n", lock.uid0, lock.uid1, lock.uid2);
@@ -844,6 +1014,10 @@ void user_database_save(void)
     writeDataBase.lockDelayLow = lock.lockDelay & 0xffff;
     writeDataBase.lockDelayHigh = (lock.lockDelay >> 16) & 0xffff;
     writeDataBase.lockReplyDelay = lock.lockReplyDelay;
+    for(i=0;i<6;i++){
+        writeDataBase.valueK[i] = lock.valueK[i];
+        writeDataBase.valueB[i] = lock.valueB[i];
+    }
 
     HAL_FLASH_Unlock();
 
@@ -917,6 +1091,16 @@ void user_reply_handle(void)
     if(lock.cmdControl.unlockFault.sendCmdEnable && !lock.cmdControl.unlockFault.sendCmdDelay){
         lock.cmdControl.unlockFault.sendCmdEnable = CMD_DISABLE;
         onReportUnlockFault();
+    }
+
+    if(lock.cmdControl.setCalibrationParamAck.sendCmdEnable && !lock.cmdControl.setCalibrationParamAck.sendCmdDelay){
+        lock.cmdControl.setCalibrationParamAck.sendCmdEnable = CMD_DISABLE;
+        onReportSetCalibrationParam();
+    }
+
+    if(lock.cmdControl.getCalibrationParamAck.sendCmdEnable && !lock.cmdControl.getCalibrationParamAck.sendCmdDelay){
+        lock.cmdControl.getCalibrationParamAck.sendCmdEnable = CMD_DISABLE;
+        onReportGetCalibrationParam();
     }
 }
 
