@@ -251,6 +251,26 @@ void user_event_process(uint8_t cmd, uint8_t opt, uint8_t *data, uint16_t lenOfD
 					onCmdClrDispContent(data, lenOfData, 0);
 					break;
 				}
+
+				case OPTION_SET_DEV_STATUS_BY_ADDR:{
+					onCmdSetDeviceStatusByAddr(data, lenOfData);
+					break;
+				}
+
+				case OPTION_SET_DEV_FLASH_BY_ADDR:{
+					onCmdSetLedFlashByAddr(data, lenOfData);
+					break;
+				}
+
+				case OPTION_CLR_ALARM_BY_ADDR:{
+					onCmdClrDevAlarmSettingByAddr(data, lenOfData);
+					break;
+				}
+
+				case OPTION_CLR_DISP_CONTENT_BY_ADDR:{
+					onCmdClrDispContentByAddr(data, lenOfData);
+					break;
+				}
 				
 				default:
 					break;
