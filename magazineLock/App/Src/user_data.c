@@ -365,8 +365,8 @@ void onCmdSetDispContent(uint8_t *data, uint16_t length)
     lock.magazineNum = magazinNum;
 
     /* send msg here */
-		lock.cmdControl.reportMagazineNum.sendCmdEnable = CMD_ENABLE;
-		lock.cmdControl.reportMagazineNum.sendCmdDelay = 0;
+	lock.cmdControl.reportMagazineNum.sendCmdEnable = CMD_ENABLE;
+	lock.cmdControl.reportMagazineNum.sendCmdDelay = 0;
 }
 
 void onCmdClrDispContent(uint8_t *data, uint16_t length, uint8_t ack)
@@ -636,6 +636,46 @@ out:
     lock.magazineNum = 0;
     /* send ack msg here */
     // user_database_save();
+}
+
+void onCmdSetDispContentByAddr(uint8_t *data, uint16_t length)
+{
+    uint16_t pos = 0;
+    uint16_t magazinNum = 0;
+    uint16_t addr;
+
+    if(length != 3){
+        printf("[%s]length error!\r\n", __FUNCTION__);
+        return;
+    }
+
+    magazinNum = (data[pos++] << 8);
+    magazinNum += data[pos++];
+
+    addr = data[pos++];
+
+    if(lock.address != addr){
+        printf("[%s]addr is not matched!\r\n", __FUNCTION__);
+        return;
+    }
+
+    lock.magazineNum = magazinNum;
+}
+
+void onCmdSetMultiDevsDispContent(uint8_t *data, uint16_t length)
+{
+    uint16_t pos = 0;
+    uint16_t magazinNum = 0;
+
+    if(length != 2){
+        printf("[%s]length error!\r\n", __FUNCTION__);
+        return;
+    }
+
+    magazinNum = (data[pos++] << 8);
+    magazinNum += data[pos++];
+
+    lock.magazineNum = magazinNum;
 }
 
 void onReportDeviceStatus(void)

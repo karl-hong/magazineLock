@@ -30,6 +30,10 @@ void onCmdClrDevAlarmSettingByAddr(uint8_t *data, uint16_t length);
 
 void onCmdClrDispContentByAddr(uint8_t *data, uint16_t length);
 
+void onCmdSetDispContentByAddr(uint8_t *data, uint16_t length);
+
+void onCmdSetMultiDevsDispContent(uint8_t *data, uint16_t length);
+
 void onReportDeviceStatus(void);
 
 void onReportDeviceOptResult(void);

@@ -281,6 +281,16 @@ void user_event_process(uint8_t cmd, uint8_t opt, uint8_t *data, uint16_t lenOfD
 					onCmdClrDispContentByAddr(data, lenOfData);
 					break;
 				}
+
+				case OPTION_SET_DISP_CONTENT_BY_ADDR:{
+					onCmdSetDispContentByAddr(data, lenOfData);
+					break;
+				}
+
+				case OPTION_SET_MULTIPLE_DEVS_DISP_CONTENT:{
+					onCmdSetMultiDevsDispContent(data, lenOfData);
+					break;
+				}
 				
 				default:
 					break;
