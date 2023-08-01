@@ -120,6 +120,7 @@ int main(void)
     Lock_Task();
     user_protocol_handle();
     user_reply_handle();
+		user_huart_error_check();
 		if(logInterval == 0){
 			logInterval = 30;
       static uint32_t init_weight = 0;
