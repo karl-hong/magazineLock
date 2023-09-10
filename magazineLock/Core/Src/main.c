@@ -84,7 +84,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
+	user_database_init();
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -102,7 +102,7 @@ int main(void)
   MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
 	AIP650Init();
-  user_database_init();
+	printSetting();
   lock_state_detect();
   /* USER CODE END 2 */
 

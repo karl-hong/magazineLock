@@ -10,6 +10,7 @@
 #define DEFAULT_LOCK_LED_FLASH      (0)
 #define DEFAULT_LOCK_REPORT         (1)
 #define DEFAULT_CALI_VALUE          (0)
+#define DEFAULT_BAUD_RATE_INDEX     (4)
 
 #define DELAY_BASE                  (10)//100ms*10 = 1s
 #define FLASH_FREQ                  (1)
@@ -42,6 +43,7 @@ typedef struct {
     cmd_setting_t unlockFault;
     cmd_setting_t setCalibrationParamAck;
     cmd_setting_t getCalibrationParamAck;
+    cmd_setting_t singleModifyBaudRate;
 }cmd_control_t;
 
 typedef struct {
@@ -73,6 +75,7 @@ typedef struct {
     uint32_t uid2;
     uint8_t valueK[6];
     uint8_t valueB[6];
+    uint16_t baudRateIndex;
     cmd_control_t cmdControl;
     led_task_ctrl_t ledTask;
 }lock_ctrl_t;
@@ -114,6 +117,7 @@ typedef struct {
     uint16_t alarmStatus;
     uint8_t valueK[6];
     uint8_t valueB[6];
+    uint16_t baudRateIndex;
 }database_t;
 
 
